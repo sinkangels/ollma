@@ -1384,7 +1384,7 @@ func OpenVerifiedManifest(path, root string) (*os.File, string, error) {
 }
 
 func openVerifiedManifestLocked(path, root string) (*os.File, string, error) {
-	resolvedRoot, err := filepath.EvalSymlinks(root)
+	resolvedRoot, err := resolveLinks(root)
 	if err != nil {
 		return nil, "", err
 	}
@@ -1553,7 +1553,7 @@ func evalAbs(path string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return filepath.EvalSymlinks(abs)
+	return resolveLinks(abs)
 }
 
 func sameFile(a, b string) bool {
